@@ -5,7 +5,7 @@
 #' @param prec SpatRaster containing 12 layers with monthlyprecipitation from January to December.
 #' @param PET Optional. Potential evapotranspiration in raster format.
 #' @param CC Field capacity. It depends on water retention capacity and depth of roots. 400 as default value. It can be a SpatRaster layer.
-#' @param wout Optional. name of the output raster. Must include ".tif".
+#' @param path Optional. Path (folder) where the output raster files and look-up-tables will be saved.
 #' @param ncpu Number of cores used for the most demanding calculations.
 #' @return SpatRaster with 144 layers corresponding to the 12 monthly values of 'temp', 'prec','PET','P_PET','PPA','ST','i_ST','RET','HD','HEX','r','rP'.
 #' @import terra
@@ -13,13 +13,13 @@
 #' \donttest{
 #' tmp <- terra::rast(tmpRast)
 #' pre <- terra::rast(preRast)
-#' wb <- watbalRaster(tmp, pre, PET = NULL, CC = 400, wout=NULL, ncpu = 2)
+#' wb <- watbalRaster(tmp, pre, PET = NULL, CC = 400, path=NULL, ncpu = 2)
 #' }
 #' @export
 
 
 
-watbalRaster <- function(temp, prec, PET = NULL, CC, wout=NULL, ncpu = 2){
+watbalRaster <- function(temp, prec, PET = NULL, CC, path=NULL, ncpu = 2){
 
   # extract latitudes
   e <- prec[[1]]
@@ -269,8 +269,10 @@ watbalRaster <- function(temp, prec, PET = NULL, CC, wout=NULL, ncpu = 2){
   names(reswatbal)[121:132] <- paste0('r',formatC(1:12,width = 2, flag = '0'))
   names(reswatbal)[133:144] <- paste0('rP',formatC(1:12,width = 2, flag = '0'))
 
-  if(!is.null(wout)){
-    terra::writeRaster(reswatbal, wout, overwrite=TRUE)
+  if(!is.null(path)){
+    for(i in 1:dim(reswatbal)[3]){
+      terra::writeRaster(reswatbal[[i]], paste0(path,'/',names(reswatbal)[[i]],'.tif'), overwrite=TRUE)
+    }
   }
   return(reswatbal)
 }

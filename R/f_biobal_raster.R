@@ -3,18 +3,18 @@
 #' @description Computes bioclimatic balance from water balance in raster format.
 #' @param bh Water balance in raster format.
 #' @param CC Field capacity. It depends on water retention capacity and depth of roots. 400 as default value. It can be a SpatRaster layer.
-#' @param wout Name of the raster output file.
+#' @param path Optional. Path (folder) where the output raster files and look-up-tables will be saved.
 #' @param ncpu Number of CPUs to use. By default, sequential mode (1 cpu) is used.
 #' @return SpatRaster with 48 layers corresponding to the 12 monthly values of 'B', 'b','bc','bl'.
 #' @import terra
 #' @examples
 #' \donttest{
 #' wb <- terra::rast(wbRast)
-#' bb <- biobalRaster(wb, CC = 400, wout=NULL, ncpu = 2)
+#' bb <- biobalRaster(wb, CC = 400, path=NULL, ncpu = 2)
 #' }
 #' @export
 #'
-biobalRaster <- function(bh, CC, wout=NULL, ncpu = 1){
+biobalRaster <- function(bh, CC, path=NULL, ncpu = 1){
 
   # mask
   msk <- bh[[1]]/bh[[1]]
@@ -230,44 +230,16 @@ biobalRaster <- function(bh, CC, wout=NULL, ncpu = 1){
   bc <- ((b - bl) * w1) + ((b * 0) * w2)
   names(bc) <- paste0('bc',formatC(1:12,width = 2, flag = '0'))
 
-  # return of final values
-
-  # all variables
-  # resbiobal <- c(p, bh[[1:12]], bh[[25:36]], e, vars[[1:12]], vars[[13:24]], vars[[25:36]], vars[[37:48]],
-  #                vars[[49:60]], vars[[61:72]], vars[[73:84]], x, E_e, D_e, Cd, t75, B, b, bl, bc)
-  # names(resbiobal)[73:84] <- paste0('s_e_D',formatC(1:12,width = 2, flag = '0'))
-  # names(resbiobal)[85:96] <- paste0('sum_s',formatC(1:12,width = 2, flag = '0'))
-  # names(resbiobal)[97:108] <- paste0('c_D_e',formatC(1:12,width = 2, flag = '0'))
-  # names(resbiobal)[109:120] <- paste0('sum_c',formatC(1:12,width = 2, flag = '0'))
-
   # only bioclimatic intensities
   resbiobal <- c(B, b, bc, bl)
 
-  # p: precipitacion util
-  # temp: temperature
-  # pet: potential evapotranspiration
-  # e: Evapotranspiración residual
-  # D: agua disponible
-  # S: sobrante de humedad
-  # s_e_D :
-  # sum_s :
-  # c_D_e :
-  # sum_c :
-  # Q: sobrante disponible
-  # x: periodo de actividad vegetativa sin condicionamiento de sequía
-  # E_e:
-  # D_e:
-  # Cd: coeficiente de disponibilidad hídrica
-  # T75:
-  # B: Intensidad bioclimática potencial (IBP)
-  # b: intensidad bioclimática real (IBR)
-  # bl:
-  # bc: intensidad bioclimática condicionada (IBC)
 
-
-  if(!is.null(wout)){
-    terra::writeRaster(resbiobal, wout, overwrite=TRUE)
+  if(!is.null(path)){
+    for(i in 1:dim(resbiobal)[3]){
+      terra::writeRaster(resbiobal[[i]], paste0(path,'/',names(resbiobal)[[i]],'.tif'), overwrite=TRUE)
+    }
   }
+  
   return(resbiobal)
 
 }

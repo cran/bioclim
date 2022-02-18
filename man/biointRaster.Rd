@@ -4,12 +4,12 @@
 \alias{biointRaster}
 \title{Computation of Bioclimatic Intensities (raster mode)}
 \usage{
-biointRaster(bb, wout = NULL)
+biointRaster(bb, path = NULL)
 }
 \arguments{
 \item{bb}{Bioclimatic balance in raster format.}
 
-\item{wout}{name of the output raster. Must include ".tif".}
+\item{path}{Optional. Path (folder) where the output raster files will be saved.}
 }
 \value{
 SpatRaster with 120 layers corresponding to the 12 monthly values of "IBPc","IBCc","IBLc","IBRc","IBSc","IBPf","IBCf","IBLf","IBRf","IBSf".
@@ -20,6 +20,6 @@ Computes bioclimatic intensities from bioclimatic balance.
 \examples{
 \donttest{
 bb <- terra::rast(bbRast)
-bi <- biointRaster(bb, wout=NULL)
+bi <- biointRaster(bb, path=NULL)
 }
 }

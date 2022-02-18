@@ -8,7 +8,7 @@ biotypeRaster(
   temp = NULL,
   prec = NULL,
   CC = NULL,
-  wout = NULL,
+  path = NULL,
   ncpu = 1,
   PET = NULL,
   bh = NULL
@@ -21,7 +21,7 @@ biotypeRaster(
 
 \item{CC}{Field capacity. It can be numeric (1 value) or a SpatRaster object.}
 
-\item{wout}{Optional. Path and name of the output raster file.}
+\item{path}{Optional. Path (folder) where the output raster files and look-up-tables will be saved.}
 
 \item{ncpu}{number of cores to use in calculation. If not provided, sequential mode is used (1 core).}
 

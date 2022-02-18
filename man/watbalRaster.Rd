@@ -4,7 +4,7 @@
 \alias{watbalRaster}
 \title{Water balance in raster format}
 \usage{
-watbalRaster(temp, prec, PET = NULL, CC, wout = NULL, ncpu = 2)
+watbalRaster(temp, prec, PET = NULL, CC, path = NULL, ncpu = 2)
 }
 \arguments{
 \item{temp}{SpatRaster containing 12 layers with monthly temperature from January to December.}
@@ -15,7 +15,7 @@ watbalRaster(temp, prec, PET = NULL, CC, wout = NULL, ncpu = 2)
 
 \item{CC}{Field capacity. It depends on water retention capacity and depth of roots. 400 as default value. It can be a SpatRaster layer.}
 
-\item{wout}{Optional. name of the output raster. Must include ".tif".}
+\item{path}{Optional. Path (folder) where the output raster files and look-up-tables will be saved.}
 
 \item{ncpu}{Number of cores used for the most demanding calculations.}
 }
@@ -29,6 +29,6 @@ Computes water balance from temperature and precipitation in raster format.
 \donttest{
 tmp <- terra::rast(tmpRast)
 pre <- terra::rast(preRast)
-wb <- watbalRaster(tmp, pre, PET = NULL, CC = 400, wout=NULL, ncpu = 2)
+wb <- watbalRaster(tmp, pre, PET = NULL, CC = 400, path=NULL, ncpu = 2)
 }
 }

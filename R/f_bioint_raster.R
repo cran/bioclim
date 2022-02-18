@@ -2,17 +2,17 @@
 #'
 #' @description Computes bioclimatic intensities from bioclimatic balance.
 #' @param bb Bioclimatic balance in raster format.
-#' @param wout name of the output raster. Must include ".tif".
+#' @param path Optional. Path (folder) where the output raster files will be saved.
 #' @return SpatRaster with 120 layers corresponding to the 12 monthly values of "IBPc","IBCc","IBLc","IBRc","IBSc","IBPf","IBCf","IBLf","IBRf","IBSf".
 #' @examples
 #' \donttest{
 #' bb <- terra::rast(bbRast)
-#' bi <- biointRaster(bb, wout=NULL)
+#' bi <- biointRaster(bb, path=NULL)
 #' }
 #' @export
 #'
 
-biointRaster <- function(bb, wout=NULL){
+biointRaster <- function(bb, path=NULL){
 
   B <- bb[[1:12]]
   b <- bb[[13:24]]
@@ -80,8 +80,10 @@ biointRaster <- function(bb, wout=NULL){
   intens <- c(IBPc, IBCc, IBLc, IBRc, IBSc,
               IBPf, IBCf, IBLf, IBRf, IBSf)
 
-  if(!is.null(wout)){
-    terra::writeRaster(intens, wout, overwrite=TRUE)
+  if(!is.null(path)){
+    for(i in 1:dim(intens)[3]){
+      terra::writeRaster(intens[[i]], paste0(path,'/',names(intens)[[i]],'.tif'), overwrite=TRUE)
+    }
   }
   return(intens)
 }

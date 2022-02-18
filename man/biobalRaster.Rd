@@ -4,14 +4,14 @@
 \alias{biobalRaster}
 \title{Computation of Bioclimatic Balance (raster mode)}
 \usage{
-biobalRaster(bh, CC, wout = NULL, ncpu = 1)
+biobalRaster(bh, CC, path = NULL, ncpu = 1)
 }
 \arguments{
 \item{bh}{Water balance in raster format.}
 
 \item{CC}{Field capacity. It depends on water retention capacity and depth of roots. 400 as default value. It can be a SpatRaster layer.}
 
-\item{wout}{Name of the raster output file.}
+\item{path}{Optional. Path (folder) where the output raster files and look-up-tables will be saved.}
 
 \item{ncpu}{Number of CPUs to use. By default, sequential mode (1 cpu) is used.}
 }
@@ -24,6 +24,6 @@ Computes bioclimatic balance from water balance in raster format.
 \examples{
 \donttest{
 wb <- terra::rast(wbRast)
-bb <- biobalRaster(wb, CC = 400, wout=NULL, ncpu = 2)
+bb <- biobalRaster(wb, CC = 400, path=NULL, ncpu = 2)
 }
 }
