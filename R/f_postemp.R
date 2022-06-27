@@ -7,4 +7,4 @@
 #' postemp(rnorm(12, 18, 6))
 #' @export
 #'
-postemp <- function(t){ sum(t[which(t > 0)]) * 10}
+postemp <- function(t){ sum(t[which(t > 0)])}

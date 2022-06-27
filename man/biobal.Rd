@@ -12,7 +12,7 @@ biobal(balhid, CC)
 \item{CC}{Field capacity. It depends on water retention capacity and depth of roots. 400 as default value.}
 }
 \value{
-data frame with 20 variables: 'p', 'Tm', 'PET', 'e', 'D', 'S', 's_e_D', 'sum_s', 'c_D_e', 'sum_c', 'Q', 'x', 'E_e', 'D_e', 'Cd', 'T_75', 'B', 'b', 'bl', 'bc'.
+data frame with 12 variables: 'p', 'Tm', 'PET', 'e', 'D', 'S', 'Cd', 'T_75', 'B', 'b', 'bl', 'bc'.
 }
 \description{
 Computes bioclimatic balance from water balance.

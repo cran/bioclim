@@ -9,6 +9,7 @@
 #' @param ncpu Number of cores used for the most demanding calculations.
 #' @return SpatRaster with 144 layers corresponding to the 12 monthly values of 'temp', 'prec','PET','P_PET','PPA','ST','i_ST','RET','HD','HEX','r','rP'.
 #' @import terra
+#' @importFrom methods is
 #' @examples
 #' \donttest{
 #' tmp <- terra::rast(tmpRast)
@@ -34,11 +35,11 @@ watbalRaster <- function(temp, prec, PET = NULL, CC, path=NULL, ncpu = 2){
     if(length(CC)>1) stop("CC must be a single number") else{
       CC <- msk*CC
     }
-  } else if(class(CC) !='SpatRaster') stop("CC must be numeric or a SpatRaster")
+  } else if(!is(CC, 'SpatRaster')) stop("CC must be numeric or a SpatRaster")
 
 
   if(!is.null(PET)){
-    if(class(PET) !='SpatRaster') stop("PET must be a SpatRaster") else{
+    if(!is(PET, 'SpatRaster')) stop("PET must be a SpatRaster") else{
       pet <- PET
     }
   } else{
@@ -259,13 +260,13 @@ watbalRaster <- function(temp, prec, PET = NULL, CC, path=NULL, ncpu = 2){
   names(reswatbal)[1:12] <- paste0('temp',formatC(1:12,width = 2, flag = '0'))
   names(reswatbal)[13:24] <- paste0('prec',formatC(1:12,width = 2, flag = '0'))
   names(reswatbal)[25:36] <- paste0('PET',formatC(1:12,width = 2, flag = '0'))
-  names(reswatbal)[37:48] <- paste0('P_PET',formatC(1:12,width = 2, flag = '0'))
-  names(reswatbal)[49:60] <- paste0('PPA',formatC(1:12,width = 2, flag = '0'))
+  names(reswatbal)[37:48] <- paste0('TEAW',formatC(1:12,width = 2, flag = '0'))
+  names(reswatbal)[49:60] <- paste0('PALW',formatC(1:12,width = 2, flag = '0'))
   names(reswatbal)[61:72] <- paste0('ST',formatC(1:12,width = 2, flag = '0'))
   names(reswatbal)[73:84] <- paste0('i_ST',formatC(1:12,width = 2, flag = '0'))
   names(reswatbal)[85:96] <- paste0('RET',formatC(1:12,width = 2, flag = '0'))
-  names(reswatbal)[97:108] <- paste0('HD',formatC(1:12,width = 2, flag = '0'))
-  names(reswatbal)[109:120] <- paste0('HEX',formatC(1:12,width = 2, flag = '0'))
+  names(reswatbal)[97:108] <- paste0('MD',formatC(1:12,width = 2, flag = '0'))
+  names(reswatbal)[109:120] <- paste0('ME',formatC(1:12,width = 2, flag = '0'))
   names(reswatbal)[121:132] <- paste0('r',formatC(1:12,width = 2, flag = '0'))
   names(reswatbal)[133:144] <- paste0('rP',formatC(1:12,width = 2, flag = '0'))
 

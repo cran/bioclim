@@ -7,6 +7,7 @@
 #' @param ncpu Number of CPUs to use. By default, sequential mode (1 cpu) is used.
 #' @return SpatRaster with 48 layers corresponding to the 12 monthly values of 'B', 'b','bc','bl'.
 #' @import terra
+#' @importFrom methods is
 #' @examples
 #' \donttest{
 #' wb <- terra::rast(wbRast)
@@ -23,7 +24,7 @@ biobalRaster <- function(bh, CC, path=NULL, ncpu = 1){
     if(length(CC)>1) stop("CC must be a single number") else{
       CC <- msk*CC
     }
-  } else if(class(CC) !='SpatRaster') stop("CC must be numeric or a SpatRaster")
+  } else if(!is(CC, 'SpatRaster')) stop("CC must be numeric or a SpatRaster")
 
   # precip util
   p <- (1-(bh[[133:144]]/100))*bh[[13:24]]
@@ -181,25 +182,25 @@ biobalRaster <- function(bh, CC, path=NULL, ncpu = 1){
   interm[is.infinite(interm)] <- 0 # we need this to avoid 0/0 = inf
   cd2 <- interm * w2
   Cd <- cd1 + cd2
-  names(Cd) <- paste0('Cd',formatC(1:12,width = 2, flag = '0'))
+  names(Cd) <- paste0('CWA',formatC(1:12,width = 2, flag = '0'))
 
   #t75
   t75 <- bh[[1:12]] - 7.5
-  names(t75) <- paste0('t75',formatC(1:12,width = 2, flag = '0'))
+  names(t75) <- paste0('T75',formatC(1:12,width = 2, flag = '0'))
 
-  #B
+  #PBI
   B <- t75 / 5
-  names(B) <- paste0('B',formatC(1:12,width = 2, flag = '0'))
+  names(B) <- paste0('PBI',formatC(1:12,width = 2, flag = '0'))
 
-  #b
+  #RBI
   w1 <- Cd >1
   b1 <- B * w1
   w2 <- Cd <=1
   b2 <- (Cd * B) * w2
   b <- b1+b2
-  names(b) <- paste0('b',formatC(1:12,width = 2, flag = '0'))
+  names(b) <- paste0('RBI',formatC(1:12,width = 2, flag = '0'))
 
-  #bl
+  #FBI
   databl <- c(vars[[61:72]], x, B, b)
   fbl <- function(databl){
     if(length(which(is.na(databl))) > 0){
@@ -222,13 +223,13 @@ biobalRaster <- function(bh, CC, path=NULL, ncpu = 1){
   }
 
   bl <- app(databl, fbl, cores=ncpu)
-  names(bl) <- paste0('bl',formatC(1:12,width = 2, flag = '0'))
+  names(bl) <- paste0('FBI',formatC(1:12,width = 2, flag = '0'))
 
-  #bc
+  #bCBI
   w1 <- vars[[61:72]] > 0
   w2 <- vars[[61:72]] <= 0
   bc <- ((b - bl) * w1) + ((b * 0) * w2)
-  names(bc) <- paste0('bc',formatC(1:12,width = 2, flag = '0'))
+  names(bc) <- paste0('CBI',formatC(1:12,width = 2, flag = '0'))
 
   # only bioclimatic intensities
   resbiobal <- c(B, b, bc, bl)

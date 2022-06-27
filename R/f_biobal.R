@@ -3,7 +3,7 @@
 #' @description Computes bioclimatic balance from water balance.
 #' @param balhid Water balance.
 #' @param CC Field capacity. It depends on water retention capacity and depth of roots. 400 as default value.
-#' @return data frame with 20 variables: 'p', 'Tm', 'PET', 'e', 'D', 'S', 's_e_D', 'sum_s', 'c_D_e', 'sum_c', 'Q', 'x', 'E_e', 'D_e', 'Cd', 'T_75', 'B', 'b', 'bl', 'bc'.
+#' @return data frame with 12 variables: 'p', 'Tm', 'PET', 'e', 'D', 'S', 'Cd', 'T_75', 'B', 'b', 'bl', 'bc'.
 #' @examples
 #' wb <- watbal(t = rnorm(12, 18, 6), p = rnorm(12, 50, 30), lat = 35, CC = 400)
 #' biobal(wb, 400)
@@ -22,10 +22,10 @@ biobal <- function(balhid, CC){
 
   #precip util
   Ce <- 1 - (bh$rP / 100)
-  bb[, 1] <- Ce * bh$Pcp
+  bb[, 1] <- Ce * bh$P
 
   #tmed
-  bb[, 2] <- bh$Tmp
+  bb[, 2] <- bh$T
 
   #pet
   bb[, 3] <- bh$PET
@@ -198,13 +198,20 @@ biobal <- function(balhid, CC){
   bc <- rep(NA, 12)
   for(i in 1:12){ if(bb[i, 10] > 0) bc[i] <- bb[i, 18] - bb[i, 19] else bc[i] <- 0}
   bb[, 20] <- bc
+  
+  # 
+  bb <- bb[,c(1,2,3,4,5,6,15,16,17,18,19,20)]
 
-  tt <- data.frame(p = sum(bb[,1]), Tm = mean(bb[,2]), PET = sum(bb[,3]), e = sum(bb[,4]),
-                   D = NA, S = NA, s_e_D = NA, sum_s = NA, c_D_e = NA, sum_c = NA,
-                   Q = NA, x = NA, E_e =  sum(bb[,13]), D_e =  sum(bb[,14]), Cd =  sum(bb[,15]),
-                   T_75 =  sum(bb[,16]), B =  sum(bb[,17]), b =  sum(bb[,18]), bl =  sum(bb[,19]),
-                   bc =  sum(bb[,20]))
+  tt <- data.frame(p = sum(bb[,1]), Tm = mean(bb[,2]), 
+                   PET = sum(bb[,3]), e = sum(bb[,4]),
+                   D = NA, S = NA, Cd =  sum(bb[,7]),
+                   T_75 =  sum(bb[,8]), B =  sum(bb[,9]), 
+                   b =  sum(bb[,10]), bl =  sum(bb[,11]),
+                   bc =  sum(bb[,12]))
   bb <- rbind(bb, tt)
   rownames(bb)[13] <- 'TOTAL'
+  
+  colnames(bb) <-  c('AIP', 'T', 'PET', 'RE', 'AW', 'S',
+                     'CWA', 'T75', 'PBI', 'RBI', 'FBI', 'CBI')
   bb
 }

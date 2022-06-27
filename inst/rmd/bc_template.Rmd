@@ -52,8 +52,8 @@ plotWL(t, p)
 ```{r, echo = FALSE}
 bh <- watbal(t = t, p = p, lat = lat, CC = CC)
 bh2 <- bh
-names(bh2) <- c('T', 'P', 'PET', 'P-PET', 'ppa', 'ST', paste0(expression(Delta),'ST'),
-               'RET', 'Dh', 'S', 'R', '%R(P)')
+names(bh2) <- c('T', 'P', 'PET', 'TEAW', 'PALW', 'ST',
+                         'i_ST', 'RET', 'MD', 'ME', 'r', 'rP')
 kbl(round(bh2, 2), caption = "Water balance")
 ```
 
@@ -74,10 +74,8 @@ plotWatbal(bh)
 ```{r, echo = FALSE}
 bb <- biobal(bh, CC)
 bb2 <- bb
-names(bb2) <- c('p', 'T', 'PET', 'e', 'D', 'S', 's=e-D',
-               expression(sum(s)), 'c=D-e', expression(sum(c)),
-               'Q', 'x', 'E-e', 'D-e', 'Cd', 'T-7.5', 'B', 'b',
-               'bl', 'bc')
+names(bb2) <- c('AIP', 'T', 'PET', 'RE', 'AW', 'S',
+                     'CWA', 'T75', 'PBI', 'RBI', 'FBI', 'CBI')
 k <- kbl(round(bb2, 2), caption = "Bioclimatic balance")
 kable_styling(k, latex_options="scale_down")
 ```

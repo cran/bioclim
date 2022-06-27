@@ -193,6 +193,10 @@ watbal <- function(t, p, lat, CC){
                    Dh = sum(balhid[, 9]), S = sum(balhid[, 10]), r = sum(balhid[, 11]), rP = mean(balhid[, 12]))
   balhid <- rbind(balhid, tt)
   rownames(balhid)[13] <- 'TOTAL'
+  
+  colnames(balhid) <-  c('T', 'P', 'PET', 'TEAW', 'PALW', 'ST',
+                         'i_ST', 'RET', 'MD', 'ME', 'r', 'rP')
+  
   balhid
 }
 

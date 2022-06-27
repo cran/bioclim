@@ -18,67 +18,65 @@ biointRaster <- function(bb, path=NULL){
   b <- bb[[13:24]]
   bc <- bb[[25:36]]
   bl <- bb[[37:48]]
-  # IBPc
-  IBPc <- B * (B > 0)
-  names(IBPc) <- paste0('IBPc', formatC(1:12,width = 2, flag = '0'))
-  # IBCc
-  IBCc <- bc * (bc > 0)
-  names(IBCc) <- paste0('IBCc', formatC(1:12,width = 2, flag = '0'))
-  # IBLc
+  # PBIw
+  PBIw <- B * (B > 0)
+  names(PBIw) <- paste0('PBIw', formatC(1:12,width = 2, flag = '0'))
+  # CBIw
+  CBIw <- bc * (bc > 0)
+  names(CBIw) <- paste0('CBIw', formatC(1:12,width = 2, flag = '0'))
+  # FBIw
   w1 <- (B > 0 & b > 0)
-  IBLc <- (bl * w1) * (bl > 0)
-  names(IBLc) <- paste0('IBLc', formatC(1:12,width = 2, flag = '0'))
+  FBIw <- (bl * w1) * (bl > 0)
+  names(FBIw) <- paste0('FBIw', formatC(1:12,width = 2, flag = '0'))
 
-  # IBLc_g
-  IBLc_g <- (IBLc > IBCc) * (IBLc - IBCc)
-  names(IBLc_g) <- paste0('IBLc_g', formatC(1:12,width = 2, flag = '0'))
+  # FBIw_g
+  FBIw_g <- (FBIw > CBIw) * (FBIw - CBIw)
+  names(FBIw_g) <- paste0('FBIw_g', formatC(1:12,width = 2, flag = '0'))
 
-  # IBPc_g
-  IBPc_g <- IBPc - (IBCc + IBLc_g)
-  names(IBPc_g) <- paste0('IBPc_g', formatC(1:12,width = 2, flag = '0'))
+  # PBIw_g
+  PBIw_g <- PBIw - (CBIw + FBIw_g)
+  names(PBIw_g) <- paste0('PBIw_g', formatC(1:12,width = 2, flag = '0'))
 
-  # IBRc
-  IBRc <- IBLc - IBCc
-  names(IBRc) <- paste0('IBRc', formatC(1:12,width = 2, flag = '0'))
+  # RBIw
+  RBIw <- FBIw - CBIw
+  names(RBIw) <- paste0('RBIw', formatC(1:12,width = 2, flag = '0'))
 
-  # IBSc
-  IBSc <- b * (B > 0 & b < 0)
-  names(IBSc) <- paste0('IBSc', formatC(1:12,width = 2, flag = '0'))
+  # DBIw
+  DBIw <- b * (B > 0 & b < 0)
+  names(DBIw) <- paste0('DBIw', formatC(1:12,width = 2, flag = '0'))
 
-  # IBPf
-  IBPf <- B * (B < 0)
-  names(IBPf) <- paste0('IBPf', formatC(1:12,width = 2, flag = '0'))
+  # PBIc
+  PBIc <- B * (B < 0)
+  names(PBIc) <- paste0('PBIc', formatC(1:12,width = 2, flag = '0'))
 
-  # IBCf
-  IBCf <- bc * (bc[[3]] < 0)
-  names(IBCf) <- paste0('IBCf', formatC(1:12,width = 2, flag = '0'))
+  # CBIc
+  CBIc <- bc * (bc[[3]] < 0)
+  names(CBIc) <- paste0('CBIc', formatC(1:12,width = 2, flag = '0'))
 
-  # IBLf
+  # FBIc
   w1 <- (B < 0 & b < 0)
-  IBLf <- ((bl * (bl < 0)) * w1) + ((b * (bl > 0)) * w1)
-  names(IBLf) <- paste0('IBLf', formatC(1:12,width = 2, flag = '0'))
+  FBIc <- ((bl * (bl < 0)) * w1) + ((b * (bl > 0)) * w1)
+  names(FBIc) <- paste0('FBIc', formatC(1:12,width = 2, flag = '0'))
 
-  # IBLf_g
-  IBLf_g <- (IBCf > IBLf) * (IBLf - IBCf)
-  names(IBLf_g) <- paste0('IBLf_g', formatC(1:12,width = 2, flag = '0'))
+  # FBIc_g
+  FBIc_g <- (CBIc > FBIc) * (FBIc - CBIc)
+  names(FBIc_g) <- paste0('FBIc_g', formatC(1:12,width = 2, flag = '0'))
 
-  # IBPf_g
-  IBPf_g <- IBPf + (IBCf - IBLf_g)
-  names(IBPf_g) <- paste0('IBPf_g', formatC(1:12,width = 2, flag = '0'))
+  # PBIc_g
+  PBIc_g <- PBIc + (CBIc - FBIc_g)
+  names(PBIc_g) <- paste0('PBIc_g', formatC(1:12,width = 2, flag = '0'))
 
-  # IBRf
-  IBRf <- IBLf + IBCf
-  names(IBRf) <- paste0('IBRf', formatC(1:12,width = 2, flag = '0'))
+  # RBIc
+  RBIc <- FBIc + CBIc
+  names(RBIc) <- paste0('RBIc', formatC(1:12,width = 2, flag = '0'))
 
-  # IBSf
+  # DBIc
   w1 <- (B < 0)
-  IBSf <- (b * (b > 0)) * w1
-  names(IBSf) <- paste0('IBSf', formatC(1:12,width = 2, flag = '0'))
+  DBIc <- (b * (b > 0)) * w1
+  names(DBIc) <- paste0('DBIc', formatC(1:12,width = 2, flag = '0'))
 
-  # intens <- c(IBPc, IBPc_g, IBCc, IBLc, IBLc_g, IBRc, IBSc,
-  #             IBPf, IBPf_g, IBCf, IBLf, IBLf_g, IBRf, IBSf)
-  intens <- c(IBPc, IBCc, IBLc, IBRc, IBSc,
-              IBPf, IBCf, IBLf, IBRf, IBSf)
+  intens <- c(PBIw, CBIw, FBIw, RBIw, DBIw,
+              PBIc, CBIc, FBIc, RBIc, DBIc)
 
   if(!is.null(path)){
     for(i in 1:dim(intens)[3]){

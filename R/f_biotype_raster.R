@@ -15,6 +15,7 @@
 #' btr <- biotypeRaster(bh = wb)
 #'}
 #' @importFrom utils write.table
+#' @importFrom methods is
 #' @export
 #'
 
@@ -30,9 +31,9 @@ biotypeRaster <- function(temp=NULL, prec=NULL, CC=NULL, path=NULL, ncpu = 1, PE
         msk <- prec[[1]]/prec[[1]]
         CC <- msk*CC
       }
-    } else if(class(CC) !='SpatRaster') stop("CC must be numeric or a SpatRaster")
+    } else if(!is(CC, 'SpatRaster')) stop("CC must be numeric or a SpatRaster")
   } else{
-    if(class(bh) !='SpatRaster') stop("bh must be a SpatRaster")
+    if(!is(bh, 'SpatRaster')) stop("bh must be a SpatRaster")
     prec <- bh[[13:24]]
     temp <- bh[[1:12]]
     PET <- bh[[25:36]]
@@ -40,7 +41,7 @@ biotypeRaster <- function(temp=NULL, prec=NULL, CC=NULL, path=NULL, ncpu = 1, PE
 
   # check if PET is provided, then water balance, then computes it
   if(!is.null(PET)){
-    if(class(PET) !='SpatRaster') stop("PET must be a SpatRaster")
+    if(!is(PET, 'SpatRaster')) stop("PET must be a SpatRaster")
   } else{
     if(is.null(bh)){
       message(paste0("Computing water balance ",'[',Sys.time(),']'))

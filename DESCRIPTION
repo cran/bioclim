@@ -1,7 +1,7 @@
 Package: bioclim
 Type: Package
 Title: Bioclimatic Analysis and Classification
-Version: 0.2.0
+Version: 0.3.0
 Author: Roberto Serrano-Notivoli
 Maintainer: Roberto Serrano-Notivoli <roberto.serrano@uam.es>
 Description: Using numeric or raster data, this package contains functions to 
@@ -11,11 +11,11 @@ Description: Using numeric or raster data, this package contains functions to
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 Imports: terra, ggplot2, berryFunctions, reshape2, rmarkdown, stats,
-        grDevices
+        grDevices, methods
 NeedsCompilation: no
-Packaged: 2022-02-18 13:27:37 UTC; rserrano
+Packaged: 2022-06-27 06:44:48 UTC; rserrano
 Depends: R (>= 3.5.0)
 Repository: CRAN
-Date/Publication: 2022-02-18 15:00:02 UTC
+Date/Publication: 2022-06-27 07:30:08 UTC

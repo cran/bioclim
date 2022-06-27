@@ -20,13 +20,13 @@ plotWatbal <- function(bh){
   rownames(dbh) <- month.name
 
   for(i in 1:12){
-    dbh[i, 1] <- min(bh$PET[i], bh$Pcp[i])
-    if(bh$ETR[i] == bh$PET[i]) {if(round(bh$S[i],2) > 0) dbh[i, 2] <- bh$Pcp[i] - dbh[i, 1] else dbh[i, 2] <- 0} else dbh[i, 2] <- 0
-    if(bh$PET[i] > bh$Pcp[i]) dbh[i, 3] <- bh$ETR[i] - sum(dbh[i, 1:2]) else dbh[i, 3] <- 0
-    if(bh$PET[i] > bh$ETR[i]) dbh[i, 4] <- bh$PET[i] - sum(dbh[i, 1:3]) else dbh[i, 4] <- 0
-    if(bh$PET[i] > bh$Pcp[i]) dbh[i, 5] <- 0 else{
-      if(bh$ETR[i] == bh$PET[i]) {
-        if(round(bh$S[i],2) == 0) dbh[i, 5] <- bh$Pcp[i] - sum(dbh[i, 1:4]) else dbh[i, 5] <- 0
+    dbh[i, 1] <- min(bh$PET[i], bh$P[i])
+    if(bh$RET[i] == bh$PET[i]) {if(round(bh$ME[i],2) > 0) dbh[i, 2] <- bh$P[i] - dbh[i, 1] else dbh[i, 2] <- 0} else dbh[i, 2] <- 0
+    if(bh$PET[i] > bh$P[i]) dbh[i, 3] <- bh$RET[i] - sum(dbh[i, 1:2]) else dbh[i, 3] <- 0
+    if(bh$PET[i] > bh$RET[i]) dbh[i, 4] <- bh$PET[i] - sum(dbh[i, 1:3]) else dbh[i, 4] <- 0
+    if(bh$PET[i] > bh$P[i]) dbh[i, 5] <- 0 else{
+      if(bh$RET[i] == bh$PET[i]) {
+        if(round(bh$ME[i],2) == 0) dbh[i, 5] <- bh$P[i] - sum(dbh[i, 1:4]) else dbh[i, 5] <- 0
       } else dbh[i, 5] <- 0
     }
   }

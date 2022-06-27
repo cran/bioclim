@@ -10,7 +10,7 @@
 
 
 ith <- function(bh){
-  num <- (bh$P_PET[13]/bh$PET[13])*100
+  num <- (bh$TEAW[13]/bh$PET[13])*100
   if(num > 100){
     res <- 'Perhumid'
   } else if(num > 80 & num <= 100){
@@ -27,10 +27,8 @@ ith <- function(bh){
     res <- 'Dry humid'
   } else if(num > -40 & num <= -20){
     res <- 'Semiarid'
-  } else if(num > -60 & num <= -40){
+  } else if(num <= -40){
     res <- 'Arid'
-  } else if(num <= -60){
-    res <- 'HyperArid'
-  }
+  } 
   return(res)
 }

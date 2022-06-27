@@ -25,16 +25,15 @@ ithRaster <- function(bh){
   m <- matrix(m, ncol=3, byrow=TRUE)
   clf <- terra::classify(num, m)
 
-  # 1: 'HyperArid'
-  # 2: 'Arid',
-  # 3: 'Semiarid',
-  # 4: 'Dry humid',
-  # 5: 'Moist humid',
-  # 6 'Low humid',
-  # 7: 'Moderate humid',
-  # 8: 'Highly humid',
-  # 9: 'Very humid',
-  # 10: 'Perhumid'
+  # 1: 'Arid',
+  # 2: 'Semiarid',
+  # 3: 'Dry humid',
+  # 4: 'Moist humid',
+  # 5 'Low humid',
+  # 6: 'Moderate humid',
+  # 7: 'Highly humid',
+  # 8: 'Very humid',
+  # 9: 'Perhumid'
 
   return(clf)
 }

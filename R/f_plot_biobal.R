@@ -17,23 +17,38 @@
 
 plotBiobal <- function(intens){
   #
-  dbb <- intens[, rev(c(3, 5, 2, 7, 10, 12, 14, 9))]
+  for(i in 1:12){
+    if(intens$FBIw[i] < intens$CBIw[i]) intens$FBIw_g[i] <- 0 else intens$FBIw_g[i] <- intens$FBIw[i] - intens$CBIw[i]
+    intens$PBIw_g[i] <- intens$PBIw[i] - (intens$CBIw[i] + intens$FBIw_g[i])
+    if(intens$CBIc[i] < intens$FBIc[i]) intens$FBIc_g[i] <- 0 else intens$FBIc_g[i] <- intens$FBIc[i] - intens$CBIc[i]
+    intens$PBIc_g[i] <- intens$PBIc[i] - (intens$CBIc[i] + intens$FBIc_g[i])
+  }
+  # "CBIw" "FBIw_g" "PBIw_g" "DBIw" "CBIc" "FBIc_g" "DBIc" "PBIc_g"
+  dbb <- data.frame(PBIc_g = intens$PBIc_g,
+                    FBIc_g = intens$FBIc_g,
+                    CBIc = intens$CBIc, 
+                    DBIc = intens$DBIc,
+                    PBIw_g = intens$PBIw_g, 
+                    FBIw_g = intens$FBIw_g, 
+                    CBIw = intens$CBIw,
+                    DBIw = intens$DBIw)
+  # dbb <- dbb[,rev(c(1,2,3,4,5,6,7,8))]
 
   dbb$mon <- as.character(formatC(1:12, width = 2, flag = '0'))
   dbb <- melt(dbb, id.var="mon")
 
   ggplot(dbb[order(dbb$variable),], aes(x = mon, y = value, fill = variable)) +
     geom_bar(stat = "identity") +
-    scale_fill_manual("legend", values = c("IBPf_g" = 'azure',
-                                           "IBSf" = "yellow",
-                                           "IBLf_g" = "blue1",
-                                           'IBCf' = 'cyan',
-                                           'IBSc' = 'red',
-                                           'IBPc_g' = 'cornsilk',
-                                           'IBLc_g' = 'darkgreen',
-                                           'IBCc' = 'chartreuse'),
-                      labels = c('IBPf', 'IBSf', 'IBLf', 'IBCf',
-                                 'IBSc', 'IBPc', 'IBLc', 'IBCc')) +
+    scale_fill_manual("legend", values = c("PBIc_g" = '#35B2FF',
+                                           "FBIc_g" = "#2B7FE0",
+                                           'CBIc' = "#224CC2",
+                                           "DBIc" = '#1919A4',
+                                           'PBIw_g' = '#FFBC35',
+                                           'FBIw_g' = '#F1842A',
+                                           'CBIw' = '#E44C1F',
+                                           'DBIw' = '#D71414'),
+                      labels = c('PBIc', 'FBIc', 'CBIc', 'DBIc',
+                                 'PBIw', 'FBIw', 'CBIw', 'DBIw')) +
     theme_minimal() +
     theme(legend.position="bottom",
           legend.title = element_blank(),
