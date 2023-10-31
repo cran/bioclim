@@ -1,9 +1,9 @@
 Package: bioclim
 Type: Package
 Title: Bioclimatic Analysis and Classification
-Version: 0.3.0
+Version: 0.4.0
 Author: Roberto Serrano-Notivoli
-Maintainer: Roberto Serrano-Notivoli <roberto.serrano@uam.es>
+Maintainer: Roberto Serrano-Notivoli <roberto.serrano@unizar.es>
 Description: Using numeric or raster data, this package contains functions to 
     calculate: complete water balance, bioclimatic balance, bioclimatic 
     intensities, reports for individual locations, multi-layered rasters for
@@ -11,11 +11,11 @@ Description: Using numeric or raster data, this package contains functions to
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.3
 Imports: terra, ggplot2, berryFunctions, reshape2, rmarkdown, stats,
         grDevices, methods
 NeedsCompilation: no
-Packaged: 2022-06-27 06:44:48 UTC; rserrano
+Packaged: 2023-10-31 13:43:43 UTC; usuario
 Depends: R (>= 3.5.0)
 Repository: CRAN
-Date/Publication: 2022-06-27 07:30:08 UTC
+Date/Publication: 2023-10-31 16:20:12 UTC

@@ -1,4 +1,4 @@
-1ad984e380d7a09fb70b11dfbf90f0fa *DESCRIPTION
+a86d38a027c80fc7dbbe8147dcefbb8e *DESCRIPTION
 80dce67956aaffbb54bc1cecd884fdb0 *NAMESPACE
 5db2f173758f45f98dd5be514c643eda *R/data.R
 dfb0faebf091f4752222af2464009c8c *R/f_biobal.R
@@ -19,12 +19,11 @@ c8df84fe249b7b507041bec8a024a668 *R/f_postemp.R
 7131e87947f06818724805ebe0855c65 *R/f_watbal.R
 ed8431b51b1a62b700ffc4bd0f055453 *R/f_watbal_raster.R
 7dfadb8482604145278e2b7f5119527b *R/globals.R
-137e67efe2fcec7dfcbcda41f625cc1e *data/biobalrast.rda
-a81fca7138c6411166f614f671bcb9bb *data/prerast.rda
-003108c355d122bd8fb2a69890abef29 *data/temprast.rda
-95b0bf3ed79998098a255b18e7efa718 *data/watbalrast.rda
+005b4272cdbef8779e7182d465e25dda *data/biobalrast.rda
+8a6ffe53bb35b1caba803c1f3f408ea6 *data/prerast.rda
+c1422713bccb7c1f8bbd1c1cc6ab863a *data/temprast.rda
+2ac038941121543a114fcac27d6fa514 *data/watbalrast.rda
 bbcb3edf883a5b9e95785180849f448e *inst/rmd/bc_template.Rmd
-18613e4afccb0f5d20f02b79d88906e4 *inst/rmd/bioclim_Mariquit.pdf
 a724556d72779667e03bf5d239a833b7 *man/bbRast.Rd
 8c016b18790b2dd2d1795889d24cc4a4 *man/biobal.Rd
 f8e1e867e9998eb957a6f235a6b070e6 *man/biobalRaster.Rd
